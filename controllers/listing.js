@@ -14,8 +14,8 @@ module.exports.renderNewForm = (req,res)=>{
 };
 
 module.exports.createListing = async(req,res,next)=>{
-
-    let response= await geocodingClient
+    try{
+        let response= await geocodingClient
     .forwardGeocode({
         query: req.body.listing.location,
         limit: 1
@@ -31,6 +31,9 @@ module.exports.createListing = async(req,res,next)=>{
     console.log(savedListing)
     req.flash("success","New Listing Added!");
     res.redirect("/listings");
+    }catch(err){
+        console.log(err)
+    }
 };
 
 module.exports.show = async(req,res)=>{
